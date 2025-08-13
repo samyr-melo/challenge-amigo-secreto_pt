@@ -1,71 +1,97 @@
-Sorteador de Amigos
-Este é um projeto simples em JavaScript para sortear nomes de uma lista de amigos, garantindo que cada nome seja sorteado apenas uma vez. É ideal para brincadeiras como amigo secreto, sorteios rápidos ou qualquer situação em que você precise selecionar nomes de forma aleatória e sem repetição.
 
-🚀 Funcionalidades
-Adicionar Amigos: Insira os nomes dos amigos em um campo de texto e adicione-os a uma lista.
 
-Exibir Lista: A lista de amigos adicionados é exibida dinamicamente na tela.
+# Sorteador de Amigos
 
-Sortear Amigo: O projeto sorteia um amigo da lista de forma aleatória e o exibe.
+Este é um projeto simples em JavaScript para realizar sorteios de nomes de forma aleatória e sem repetição. Perfeito para organizar um amigo secreto ou qualquer sorteio rápido\!
 
-Sem Repetição: Cada nome sorteado é removido da lista, garantindo que ele não será sorteado novamente.
+## 🌟 Recursos Principais
 
-⚙️ Como Usar
-Para usar este projeto, você precisará de um arquivo HTML e um arquivo JavaScript.
+  * **Adição de Nomes:** Adicione facilmente nomes a uma lista.
+  * **Sorteio Aleatório:** Seleciona um nome de forma justa e aleatória.
+  * **Sem Repetição:** Garante que o mesmo nome não seja sorteado duas vezes.
 
-HTML: Crie a estrutura básica da página, incluindo um campo de texto para adicionar amigos, um botão para adicionar, um botão para sortear e uma lista para exibir os nomes.
+## 🚀 Como Executar o Projeto
 
-HTML
+Para usar este sorteador, basta ter um arquivo `index.html` e um arquivo `script.js`.
 
-<input type="text" id="amigo" placeholder="Digite o nome do amigo">
-<button onclick="adicionarAmigo()">Adicionar Amigo</button>
-<button onclick="sortearAmigo()">Sortear</button>
+### Passo 1: HTML
 
-<h3>Lista de Amigos:</h3>
-<ul id="listaAmigos"></ul>
-JavaScript: Anexe o código fornecido ao seu arquivo HTML. O código gerencia toda a lógica, desde adicionar os amigos até sortear.
+Copie este código para o seu arquivo `index.html`. Ele cria a interface básica com os botões e a lista.
 
-💻 Código JavaScript
-O código principal é dividido em três funções, cada uma com uma responsabilidade específica:
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Sorteador de Amigos</title>
+</head>
+<body>
+    <h1>Sorteador de Amigos</h1>
 
-adicionarAmigo()
-Esta função é chamada quando você clica para adicionar um amigo.
+    <input type="text" id="amigo" placeholder="Digite o nome do amigo">
+    <button onclick="adicionarAmigo()">Adicionar Amigo</button>
+    <button onclick="sortearAmigo()">Sortear</button>
 
-Pega o nome digitado no campo de texto.
+    <h3>Lista de Amigos:</h3>
+    <ul id="listaAmigos"></ul>
 
-Verifica se o campo não está vazio antes de adicionar.
+    <script src="script.js"></script>
+</body>
+</html>
+```
 
-Adiciona o nome à lista amigos (um array).
+### Passo 2: JavaScript
 
-Limpa o campo de texto para que um novo nome possa ser digitado.
+Crie um arquivo chamado `script.js` e adicione o código abaixo. Ele contém toda a lógica do sorteador.
 
-Chama a função exibirListaAmigos() para atualizar a lista na tela.
+```javascript
+// Array para armazenar os amigos
+let amigos = [];
 
-exibirListaAmigos()
-Esta função é responsável por atualizar a visualização da lista no HTML.
+// Função para adicionar um amigo
+function adicionarAmigo() {
+    const nomeAmigo = document.getElementById('amigo').value;
+    if (nomeAmigo) {
+        amigos.push(nomeAmigo);
+        document.getElementById('amigo').value = '';
+        exibirListaAmigos();
+    }
+}
 
-Pega o elemento <ul> com o ID listaAmigos.
+// Função para exibir a lista de amigos na tela
+function exibirListaAmigos() {
+    const lista = document.getElementById('listaAmigos');
+    lista.innerHTML = ''; // Limpa a lista antes de atualizar
 
-Limpa o conteúdo anterior da lista para evitar duplicatas.
+    amigos.forEach(amigo => {
+        const li = document.createElement('li');
+        li.textContent = amigo;
+        lista.appendChild(li);
+    });
+}
 
-Usa um loop for para percorrer a lista de amigos (o array) e cria um novo item <li> para cada amigo.
+// Função para sortear um amigo
+function sortearAmigo() {
+    if (amigos.length === 0) {
+        alert('Adicione amigos à lista antes de sortear!');
+        return;
+    }
 
-Adiciona cada novo item à lista <ul> no HTML.
+    const indiceAleatorio = Math.floor(Math.random() * amigos.length);
+    const amigoSorteado = amigos.splice(indiceAleatorio, 1)[0];
 
-sortearAmigo()
-Esta é a função central para o sorteio.
+    alert(`O amigo sorteado foi: ${amigoSorteado}`);
+    exibirListaAmigos(); // Atualiza a lista após o sorteio
+}
+```
 
-Verifica se ainda há amigos na lista. Se a lista estiver vazia, exibe um alerta e para a execução.
+## 🧠 Como Funciona
 
-Gera um índice aleatório dentro do tamanho da lista.
+  * **`adicionarAmigo()`**: Pega o nome do input e o adiciona a um array chamado `amigos`.
+  * **`exibirListaAmigos()`**: Percorre o array `amigos` e cria dinamicamente uma lista (`<ul>`) no HTML para mostrar os nomes.
+  * **`sortearAmigo()`**:
+      * Escolhe um índice aleatório no array `amigos`.
+      * Usa o método `Array.prototype.splice()` para remover o amigo sorteado do array, garantindo que ele não seja sorteado novamente.
+      * Exibe um alerta com o nome sorteado.
 
-Usa o método splice() para remover o amigo da lista original na posição aleatória e armazena o nome sorteado. Isso garante que o mesmo nome não seja sorteado novamente.
-
-Exibe o nome sorteado na lista <ul> no HTML.
-
-📝 Observações
-O código é modular e fácil de entender.
-
-A função sortearAmigo() usa o método splice(indiceAleatorio, 1) para remover um item do array de forma aleatória, evitando repetições.
-
-O projeto pode ser facilmente expandido com mais funcionalidades, como um botão para reiniciar o sorteio ou remover amigos individualmente da lista.
+-----
